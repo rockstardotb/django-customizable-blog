@@ -2,22 +2,26 @@
 Today will be using the MVC framework of Django to build a simple blog website.
 
 ## Prerequisites
-Make sure you have Python3 installed on your computer.
+Make sure you have either Python3 or Docker installed on your computer.
 
 ## Get Started
-First, we will want to create a virtual environment so any dependencies that we install will be limited to that environment.
+### First, if you are NOT using Docker, we will want to create a virtual environment so any dependencies that we install will be limited to that environment.
 
-### On Windows
+#### On Windows
     cd Desktop
     virtualenv env
     cd env
     Scripts\activate.bat
 
-### On Mac/Linux
+#### On Mac/Linux
     mkdir workshop2020
     cd workshop2020
     python3 -m venv .env
     source .env/bin/activate
+### Else
+    make build
+    make run
+    make exec
 
 ## Install Django
     pip install Django
