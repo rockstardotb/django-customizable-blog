@@ -175,10 +175,13 @@ Now, if we create a post, we will see it in our admin portal
 ### Next we will create our HTML templates. First, we will need to create a template directory and define it in website/settings.py
 Create the templates directory at the same level as the project and app. Then, in website/settings.py,
 Add
+
     TEMPLATES_DIR = os.path.join(BASE_DIR,'templates')
+
 below BASE_DIR (around line number 17)
 
 Add TEMPLATES_DIR to the 'DIRS' list in the TEMPLATES LIST (around line number 59)
+
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
