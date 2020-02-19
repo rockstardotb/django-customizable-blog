@@ -101,3 +101,21 @@ If you visit 0.0.0.0:8000 in your browser, you should see this:
 #### And we need to migrate these changes
     python manage.py makemigrations
     python manage.py migrate
+
+### Now we are going to edit the prebuilt admin portal, but first we need to create an admin account
+    python manage.py createsuperuser
+    
+    Username (leave blank to use 'root'): admin
+    Email address: admin@gamil.com
+    Password: 
+    Password (again):
+    
+### Visit the admin portal at 0.0.0.0:8000/admin
+Log in using your credentials
+
+<img src="workshop2020/website/static/images/login_screen.png">
+
+Once you have logged in, you will see the admin portal
+
+<img src="workshop2020/website/static/images/admin_portal.png">
+
