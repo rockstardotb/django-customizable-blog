@@ -119,3 +119,26 @@ Once you have logged in, you will see the admin portal
 
 <img src="workshop2020/website/static/images/admin_portal.png">
 
+### Next we want to register our Post model with the admin portal. In blog/admin.py add the following:
+    from django.contrib import admin
+    from .models import Post 
+
+    # customizes the appearance of our model in the admin view
+    class PostAdmin(admin.ModelAdmin):
+        list_display = ('title', 'slug', 'status','created_on')
+        list_filter = ("status",)
+        search_fields = ['title', 'content']
+        prepopulated_fields = {'slug': ('title',)}
+
+    # registers the model and its customizations with the admin portal
+    admin.site.register(Post, PostAdmin)
+
+Now, if we create a post, we will see it in our admin portal
+
+<img src="workshop2020/website/static/images/post1.png">
+
+<img src="workshop2020/website/static/images/post2.png">
+
+<img src="workshop2020/website/static/images/post3.png">
+
+
