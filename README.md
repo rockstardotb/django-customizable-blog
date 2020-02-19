@@ -416,4 +416,143 @@ Finally, we'll create the Post detail template.
 
 <img src="workshop2020/website/static/images/detail.png">
 
+## What if you were creating this site for someone who has zero programming experience and they want to have the ability to customize things such as color palettes, background image/color, and font type?
+# Add customization models that can be used in the admin portal to customize the blog's appearance.
+### Add the following models to blog/models.py:
+
+    from django.db import models
+    from django.contrib import admin
+    import uuid
+    from django import forms
+    from django.utils.html import format_html_join
+    from django.utils.safestring import mark_safe
+    from django.contrib.auth.models import User
+
+    ...
+
+    class BackgroundImage(models.Model):
+        background_image_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+        background_image =  models.FileField(upload_to='./images', blank=True,unique=True)
+        def __str__(self):
+            return str(self.background_image)
+
+    class ColorPalette(models.Model):
+        color_palettes_id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+        text_color = models.CharField(max_length=25)
+        button_color = models.CharField(max_length=25)
+        navbar_color = models.CharField(max_length=25)
+        icon_color = models.CharField(max_length=25)
+        container_color = models.CharField(max_length=25)
+        name = models.CharField(max_length=25)
+        def __str__(self):
+            return self.name
+        class Meta:
+            verbose_name_plural = "ColorPalettes"
+    
+    class FontTable(models.Model):
+        font_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+        font_name = models.CharField(max_length=100)
+        def __str__(self):
+            return self.font_name
+    
+    class Setting(models.Model):
+        settingid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+        background_image =  models.ForeignKey(BackgroundImage, on_delete=models.CASCADE)
+        color_palettes =  models.ForeignKey(ColorPalette, on_delete=models.CASCADE)
+        font_type = models.ForeignKey(FontTable, on_delete=models.CASCADE)
+    
+        class Meta:
+            verbose_name_plural = "Settings"
+ 
+### Next, we need to register the models with the admin
+
+    from django.contrib import admin
+    from .models import Post, BackgroundImage, ColorPalette, FontTable, Setting
+    
+    class PostAdmin(admin.ModelAdmin):
+        list_display = ('title', 'slug', 'status','created_on')
+        list_filter = ("status",)
+        search_fields = ['title', 'content']
+        prepopulated_fields = {'slug': ('title',)}
+    
+    admin.site.register(Post, PostAdmin)
+    
+    class BackgroundImageAdmin(admin.ModelAdmin):
+        def image(obj):
+            return mark_safe("<a href=/images/{} target='_blank'><img src=/images/{} style='width: 50px; height:50px;'> </a>".format(obj.background_image,obj.background_image))
+        def file_name(obj):
+            return str(obj.background_image)[7:]
+    
+    
+        list_display = [
+                       image,
+                       file_name,
+                       ]
+    
+    admin.site.register(BackgroundImage, BackgroundImageAdmin)
+    
+    class ColorPaletteAdmin(admin.ModelAdmin):
+        def name(obj):
+            return obj.name
+        def text_color(obj):
+            return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.text_color,obj.text_color,"________"))
+        def button_color(obj):
+            return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.button_color,obj.button_color,"________"))
+        def navbar_color(obj):
+            return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.navbar_color,obj.navbar_color,"________"))
+        def icon_color(obj):
+            return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.icon_color,obj.icon_color,"________"))
+        def container_color(obj):
+            return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.container_color,obj.container_color,"________"))
+        #actions = None
+    
+        list_display = [
+                       name,
+                       text_color,
+                       button_color,
+                       navbar_color,
+                       icon_color,
+                       container_color,
+                       ]
+    
+    admin.site.register(ColorPalette, ColorPaletteAdmin)
+    
+    admin.site.register(FontTable)
+    admin.site.register(Setting)
+
+## Update the database by running migrations
+    python manage.py makemigrations
+    python manage.py migrate
+
+## In order for the background images to display in the admin portal, we need to do a couple of things. First, tell Django where to find the images by adding the following to the website/settings.py:
+
+    STATICFILES_DIRS = [
+            os.path.join(BASE_DIR, "static"),
+            '/website/images'
+            ]
+    
+    MEDIA_URL = '/images/'
+    MEDIA_ROOT = ''
+
+## Next, we need to update the urls in website/urls.py
+
+    from django.contrib import admin
+    from django.urls import path, include
+    from django.conf.urls.static import static
+    from django.conf import settings
+    
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('blog.urls')),
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+Now we have nice thumbnails for any background images we upload into the admin portal
+
+<img src="workshop2020/website/static/images/background_thumbs.png">
+
+We also now have the ability to enter custom color palettes for styling our blog
+
+<img src="workshop2020/website/static/images/palette_input.png">
+<img src="workshop2020/website/static/images/palette_view.png">
 
