@@ -72,3 +72,32 @@ Your directory structure should look like this:
 If you visit 0.0.0.0:8000 in your browser, you should see this:
 
 <img src="workshop2020/website/static/images/initial_django.png">
+
+### Now we need to define models in our database
+    from django.db import models
+    from django.contrib.auth.models import User
+
+
+    STATUS = (
+        (0,"Draft"),
+        (1,"Publish")
+    )
+
+    class Post(models.Model):
+        title = models.CharField(max_length=200, unique=True)
+        slug = models.SlugField(max_length=200, unique=True)
+        author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
+        updated_on = models.DateTimeField(auto_now= True)
+        content = models.TextField()
+        created_on = models.DateTimeField(auto_now_add=True)
+        status = models.IntegerField(choices=STATUS, default=0)
+
+        class Meta:
+            ordering = ['-created_on']
+
+        def __str__(self):
+            return self.title
+
+#### And we need to migrate these changes
+    python manage.py makemigrations
+    python manage.py migrate
