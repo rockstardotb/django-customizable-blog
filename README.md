@@ -187,7 +187,7 @@ Now our structure looks like this:
         │   └── __init__.py
         ├── models.py
         ├── tests.py
-        ├── models.py
+        ├── urls.py
         └── views.py
 
 ### Let us register our blog urls with admin urls in website/urls.py by adding the following:
@@ -247,7 +247,7 @@ Now our structure looks like this:
         │   └── __init__.py
         ├── models.py
         ├── tests.py
-        ├── models.py
+        ├── urls.py
         └── views.py
         
 We want to create two templates. One that serves as a template for all other templates, i.e. includes navbars, footers, styling, etc.
