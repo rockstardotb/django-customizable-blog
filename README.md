@@ -69,6 +69,9 @@ Your directory structure should look like this:
     
 ### Migrate changes to the database
     python manage.py migrate
+  
+### Add 0.0.0.0 to "ALLOWED_HOSTS" in website/settings.py
+    ALLOWED_HOSTS = ["0.0.0.0"]
 
 ### Now let us test our site by running the server
     python manage.py runserver 0.0.0.0:8000
