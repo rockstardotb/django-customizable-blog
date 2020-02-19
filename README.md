@@ -172,4 +172,174 @@ Now, if we create a post, we will see it in our admin portal
         path('', include('blog.urls')),
     ]
 
+### Next we will create our HTML templates. First, we will need to create a template directory and define it in website/settings.py
+Create the templates directory at the same level as the project and app. Then, in website/settings.py,
+Add
+    TEMPLATES_DIR = os.path.join(BASE_DIR,'templates')
+below BASE_DIR (around line number 17)
+
+Add TEMPLATES_DIR to the 'DIRS' list in the TEMPLATES LIST (around line number 59)
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            #  Add  'TEMPLATE_DIRS' here
+            'DIRS': [TEMPLATE_DIRS],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
+We want to create two templates. One that serves as a template for all other templates, i.e. includes navbars, footers, styling, etc.
+We'll call it base.html:
+
+    <!DOCTYPE html>
+    <html>
+
+        <head>
+            <title>Django Central</title>
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+            <meta name="google" content="notranslate" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+                crossorigin="anonymous" />
+        </head>
+
+        <body>
+            <style>
+                body {
+                font-family: "Roboto", sans-serif;
+                font-size: 17px;
+                background-color: #fdfdfd;
+            }
+            .shadow {
+                box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+            }
+            .btn-danger {
+                color: #fff;
+                background-color: #f00000;
+                border-color: #dc281e;
+            }
+            .masthead {
+                background: #3398E1;
+                height: auto;
+                padding-bottom: 15px;
+                box-shadow: 0 16px 48px #E3E7EB;
+                padding-top: 10px;
+            }
+            </style>
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow" id="mainNav">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'home' %}">Django central</a>
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item text-black">
+                                <a class="nav-link text-black font-weight-bold" href="#">About</a>
+                            </li>
+                            <li class="nav-item text-black">
+                                <a class="nav-link text-black font-weight-bold" href="#">Policy</a>
+                            </li>
+                            <li class="nav-item text-black">
+                                <a class="nav-link text-black font-weight-bold" href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% block content %}
+            <!-- Content Goes here -->
+            {% endblock content %}
+            {% block sidebar %}
+
+            <style>
+                    .card{
+                        box-shadow: 0 16px 48px #E3E7EB;
+                    }
+       
+            </style>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4 float-right ">
+            <div class="card my-4">
+                    <h5 class="card-header">About Us</h5>
+                <div class="card-body">
+                    <p class="card-text"> This awesome blog is made on the top of our Favourite full stack Framework 'Django', follow up the tutorial to learn how we made it..!</p>
+                    <a href="https://djangocentral.com/building-a-blog-application-with-django"
+                       class="btn btn-danger">Know more!</a>
+                </div>
+            </div>
+            </div>
+
+    {% endblock sidebar %}
+            <!-- Footer -->
+            <footer class="py-3 bg-grey">
+                <p class="m-0 text-dark text-center ">Copyright &copy; Django Central</p>
+            </footer>
+        </body>
+    </html>
+
+
+Finally, we'll create the index.html, which will extend the base.html:
+
+    {% extends "base.html" %} 
+    {% block content %}
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            font-size: 18px;
+            background-color: #fdfdfd;
+        }
+        
+        .head_text {
+            color: white;
+        }
+    
+        .card {
+            box-shadow: 0 16px 48px #E3E7EB;
+        }
+    </style>
+
+    <header class="masthead">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class=" col-md-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h3 class=" site-heading my-4 mt-3 text-white"> Welcome to my awesome Blog </h3>
+                        <p class="text-light">We Love Django As much as you do..! &nbsp
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-md-8 mt-3 left">
+                {% for post in post_list %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+                        <p class="card-text">{{post.content|slice:":200" }}</p>
+                        <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {%endblock%}
 
