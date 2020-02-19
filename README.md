@@ -43,7 +43,7 @@ Your directory structure should look like this:
     │   ├── __init__.py
     │   ├── settings.py
     │   ├── urls.py
-    │   ├── wsgi.py
+    │   └── wsgi.py
     ├── manage.py
     └── blog
         ├── __init__.py
@@ -80,7 +80,7 @@ If you visit 0.0.0.0:8000 in your browser, you should see this:
 
 <img src="workshop2020/website/static/images/initial_django.png">
 
-### Now we need to define models in our database
+### Now we need to define models in our database (blog/models.py)
     from django.db import models
     from django.contrib.auth.models import User
 
@@ -169,6 +169,26 @@ Now, if we create a post, we will see it in our admin portal
         path('', views.PostList.as_view(), name='home'),
         path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
     ]
+    
+Now our structure looks like this:
+
+    ├── db.sqlite3
+    ├── website
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── manage.py
+    └── blog
+        ├── __init__.py
+        ├── admin.py
+        ├── apps.py
+        ├── migrations
+        │   └── __init__.py
+        ├── models.py
+        ├── tests.py
+        ├── models.py
+        └── views.py
 
 ### Let us register our blog urls with admin urls in website/urls.py by adding the following:
     from django.contrib import admin
@@ -205,6 +225,31 @@ Add TEMPLATES_DIR to the 'DIRS' list in the TEMPLATES LIST (around line number 5
             },
         },
     ]
+    
+Now our structure looks like this:
+
+    ├── db.sqlite3
+    ├── templates
+    │   ├── base.html
+    │   ├── index.html
+    │   └── post_detail.html
+    ├── website
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── manage.py
+    └── blog
+        ├── __init__.py
+        ├── admin.py
+        ├── apps.py
+        ├── migrations
+        │   └── __init__.py
+        ├── models.py
+        ├── tests.py
+        ├── models.py
+        └── views.py
+        
 We want to create two templates. One that serves as a template for all other templates, i.e. includes navbars, footers, styling, etc.
 We'll call it base.html:
 
