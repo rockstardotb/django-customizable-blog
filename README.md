@@ -34,22 +34,22 @@ First, we will want to create a virtual environment so any dependencies that we 
     
 Your directory structure should look like this:
 
-├── db.sqlite3
-├── website
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-├── manage.py
-└── blog
-    ├── __init__.py
-    ├── admin.py
-    ├── apps.py
-    ├── migrations
-    │   └── __init__.py
-    ├── models.py
-    ├── tests.py
-    └── views.py
+    ├── db.sqlite3
+    ├── website
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   ├── wsgi.py
+    ├── manage.py
+    └── blog
+        ├── __init__.py
+        ├── admin.py
+        ├── apps.py
+        ├── migrations
+        │   └── __init__.py
+        ├── models.py
+        ├── tests.py
+        └── views.py
     
 ## Add Blog app to settings.py
 
@@ -71,4 +71,4 @@ Your directory structure should look like this:
     
 If you visit 0.0.0.0:8000 in your browser, you should see this:
 
-<img src="workshop2020/website/files/static/images/initial_django.png">
+<img src="workshop2020/website/static/images/initial_django.png">
