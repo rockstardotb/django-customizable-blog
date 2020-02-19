@@ -293,7 +293,7 @@ We'll call it base.html:
     </html>
 
 
-Finally, we'll create the index.html, which will extend the base.html:
+Next, we'll create the index.html, which will extend the base.html:
 
     {% extends "base.html" %} 
     {% block content %}
@@ -345,4 +345,24 @@ Finally, we'll create the index.html, which will extend the base.html:
         </div>
     </div>
     {%endblock%}
+
+Finally, we'll create the Post detail template.
+
+    {% extends 'base.html' %} {% block content %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 card mb-4  mt-3 left  top">
+          <div class="card-body">
+            <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
+            <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
+            <p class="card-text ">{{ object.content | safe }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock content %}
+
+
 
