@@ -141,4 +141,35 @@ Now, if we create a post, we will see it in our admin portal
 
 <img src="workshop2020/website/static/images/post3.png">
 
+### Next we will create our views. In blog/views.py add the following:
+    from django.views import generic
+    from .models import Post
+
+    class PostList(generic.ListView):
+        # Only show posts with a status=1, i.e. published
+        queryset = Post.objects.filter(status=1).order_by('-created_on')
+        template_name = 'index.html'
+
+    class PostDetail(generic.DetailView):
+        model = Post
+        template_name = 'post_detail.html'
+
+### Now, create a urls.py in the blog/ and add the following:
+    from . import views
+    from django.urls import path
+
+    urlpatterns = [
+        path('', views.PostList.as_view(), name='home'),
+        path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
+    ]
+
+### Let us register our blog urls with admin urls in website/urls.py by adding the following:
+    from django.contrib import admin
+    from django.urls import path, include
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('blog.urls')),
+    ]
+
 
