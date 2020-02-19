@@ -556,3 +556,7 @@ We also now have the ability to enter custom color palettes for styling our blog
 <img src="workshop2020/website/static/images/palette_input.png">
 <img src="workshop2020/website/static/images/palette_view.png">
 
+Fonts can be easily added via the admin portal and all of these can be chosen in the Settings model
+
+<img src="workshop2020/website/static/images/setting.png">
+
