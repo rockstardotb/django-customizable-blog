@@ -345,6 +345,8 @@ Next, we'll create the index.html, which will extend the base.html:
         </div>
     </div>
     {%endblock%}
+    
+<img src="workshop2020/website/static/images/index.png">
 
 Finally, we'll create the Post detail template.
 
@@ -364,5 +366,6 @@ Finally, we'll create the Post detail template.
 
     {% endblock content %}
 
+<img src="workshop2020/website/static/images/detail.png">
 
 
