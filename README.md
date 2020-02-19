@@ -240,7 +240,7 @@ We'll call it base.html:
             <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow" id="mainNav">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="{% url 'home' %}">Django central</a>
+                    <a class="navbar-brand" href="{% url 'home' %}">Django Blog</a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -263,31 +263,9 @@ We'll call it base.html:
             {% block content %}
             <!-- Content Goes here -->
             {% endblock content %}
-            {% block sidebar %}
-
-            <style>
-                    .card{
-                        box-shadow: 0 16px 48px #E3E7EB;
-                    }
-       
-            </style>
-
-            <!-- Sidebar Widgets Column -->
-            <div class="col-md-4 float-right ">
-            <div class="card my-4">
-                    <h5 class="card-header">About Us</h5>
-                <div class="card-body">
-                    <p class="card-text"> This awesome blog is made on the top of our Favourite full stack Framework 'Django', follow up the tutorial to learn how we made it..!</p>
-                    <a href="https://djangocentral.com/building-a-blog-application-with-django"
-                       class="btn btn-danger">Know more!</a>
-                </div>
-            </div>
-            </div>
-
-    {% endblock sidebar %}
             <!-- Footer -->
             <footer class="py-3 bg-grey">
-                <p class="m-0 text-dark text-center ">Copyright &copy; Django Central</p>
+                <p class="m-0 text-dark text-center ">Copyright &copy; Django Blog</p>
             </footer>
         </body>
     </html>
@@ -341,6 +319,24 @@ Next, we'll create the index.html, which will extend the base.html:
                     </div>
                 </div>
                 {% endfor %}
+            </div>
+            <style>
+                    .card{
+                        box-shadow: 0 16px 48px #E3E7EB;
+                    }
+       
+            </style>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4 float-right ">
+            <div class="card my-4">
+                    <h5 class="card-header">About Us</h5>
+                <div class="card-body">
+                    <p class="card-text"> This awesome blog is made on the top of our Favourite full stack Framework 'Django', follow up the tutorial to learn how we made it..!</p>
+                    <a href="https://github.com/rockstardotb/workshop2020/blob/master/README.md"
+                       class="btn btn-danger">Know more!</a>
+                </div>
+            </div>
             </div>
         </div>
     </div>
