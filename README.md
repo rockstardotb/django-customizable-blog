@@ -560,3 +560,94 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
 
 <img src="workshop2020/website/static/images/setting.png">
 
+## Finally, we will tie our customizations into the templates using template injections.
+
+### In base.html, the style section should be changed to this:
+
+    <style>
+        body {          
+        font-family: "Roboto", {{ font_type }};
+        font-size: 17px;
+        background-color: #fdfdfd;
+        background-image: url("{% static background_image %}");
+    }
+    .shadow {
+        box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+    }
+    .btn-danger {
+        color: {{ text_color }};
+        background-color: {{ button_color }};
+        border-color: {{ button_color }};
+    }
+    .masthead {
+        background: {{ navbar_color }};
+        height: auto;
+        padding-bottom: 15px;
+        box-shadow: 0 16px 48px #E3E7EB;
+        padding-top: 10px;
+    }
+    footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: {{ navbar_color }};
+            color: {{ text_color }};
+            padding-bottom: 15px;
+    }
+    </style>
+
+### Next, we need to edit blog/views.py so the variables we are injecting are in the context. Note, we'll override the get_context function and then insure that kwargs are also added.
+
+    from django.views import generic
+    from .models import Post, Setting
+    
+    class PostList(generic.ListView):
+        queryset = Post.objects.filter(status=1).order_by('-created_on')
+        template_name = 'index.html'
+        def get_context_data(self, **kwargs):
+            settings = Setting.objects.all().first()
+            context = {
+                'background_image' : str(settings.background_image),
+                'text_color' : str(settings.color_palettes.text_color),
+                'button_color' : str(settings.color_palettes.button_color),
+                'navbar_color' : str(settings.color_palettes.navbar_color),
+                'icon_color' : str(settings.color_palettes.icon_color),
+                'container_color' : str(settings.color_palettes.container_color),
+                'font_type' : str(settings.font_type),
+                'post_list' : self.queryset
+    
+            }
+            for key in kwargs.keys():
+                context[key] = kwargs[key]
+    
+            return context
+    
+    class PostDetail(generic.DetailView):
+        model = Post
+        template_name = 'post_detail.html'
+    
+        def get_context_data(self, **kwargs):
+            settings = Setting.objects.all().first()
+            context = {
+                'background_image' : str(settings.background_image),
+                'text_color' : str(settings.color_palettes.text_color),
+                'button_color' : str(settings.color_palettes.button_color),
+                'navbar_color' : str(settings.color_palettes.navbar_color),
+                'icon_color' : str(settings.color_palettes.icon_color),
+                'container_color' : str(settings.color_palettes.container_color),
+                'font_type' : str(settings.font_type),
+            }
+            for key in kwargs.keys():
+                context[key] = kwargs[key]
+    
+            return context
+
+### Now our blog looks like this
+
+<img src="workshop2020/website/static/images/customized.png">
+
+And customizations can easily be changed in the admin portal!
+
+This completes the Django workshop!
+
