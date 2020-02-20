@@ -565,11 +565,11 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
 ### In base.html, the style section should be changed to this:
 
     <style>
-        body {          
+        body {
         font-family: "Roboto", {{ font_type }};
         font-size: 17px;
         background-color: #fdfdfd;
-        background-image: url("{% static background_image %}");
+        background-image: url("/images/{{ background_image }}") !important;
     }
     .shadow {
         box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
@@ -597,6 +597,7 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
     }
     </style>
 
+
 ### Next, we need to edit blog/views.py so the variables we are injecting are in the context. Note, we'll override the get_context function and then insure that kwargs are also added.
 
     from django.views import generic
@@ -608,7 +609,7 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
         def get_context_data(self, **kwargs):
             settings = Setting.objects.all().first()
             context = {
-                'background_image' : str(settings.background_image),
+                'background_image' : settings.background_image,
                 'text_color' : str(settings.color_palettes.text_color),
                 'button_color' : str(settings.color_palettes.button_color),
                 'navbar_color' : str(settings.color_palettes.navbar_color),
@@ -630,7 +631,7 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
         def get_context_data(self, **kwargs):
             settings = Setting.objects.all().first()
             context = {
-                'background_image' : str(settings.background_image),
+                'background_image' : settings.background_image,
                 'text_color' : str(settings.color_palettes.text_color),
                 'button_color' : str(settings.color_palettes.button_color),
                 'navbar_color' : str(settings.color_palettes.navbar_color),
