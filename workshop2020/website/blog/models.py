@@ -30,7 +30,7 @@ class Post(models.Model):
 class BackgroundImage(models.Model):
     background_image_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    background_image =  models.FileField(upload_to='./images', blank=True,unique=True)
+    background_image =  models.ImageField(upload_to='./images', blank=True,unique=True)
     def __str__(self):
         return str(self.background_image)
 
