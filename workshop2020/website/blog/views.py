@@ -20,8 +20,6 @@ class PostList(generic.ListView):
         for key in kwargs.keys():
             context[key] = kwargs[key]
 
-        print(settings.background_image.url)
-
         return context
 
 class PostDetail(generic.DetailView):
