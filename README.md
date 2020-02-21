@@ -12,6 +12,7 @@ Make sure you have either Python3 or Docker installed on your computer.
     virtualenv env
     cd env
     Scripts\activate.bat
+    cd ../
 
 #### On Mac/Linux
     mkdir workshop2020
@@ -27,7 +28,6 @@ Make sure you have either Python3 or Docker installed on your computer.
     pip install Django
     
 ## Create Project
-    cd ../
     mkdir website
     cd website
     django-admin startproject website
@@ -55,7 +55,7 @@ Your directory structure should look like this:
         ├── tests.py
         └── views.py
     
-## Add Blog app to settings.py
+## Add Blog app to website/settings.py
 
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -212,8 +212,8 @@ Add TEMPLATES_DIR to the 'DIRS' list in the TEMPLATES LIST (around line number 5
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            #  Add  'TEMPLATE_DIRS' here
-            'DIRS': [TEMPLATE_DIRS],
+            #  Add  'TEMPLATES_DIR' here
+            'DIRS': [TEMPLATES_DIR],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -350,8 +350,6 @@ Next, we'll create the index.html, which will extend the base.html:
                 <div class=" col-md-8 col-md-10 mx-auto">
                     <div class="site-heading">
                         <h3 class=" site-heading my-4 mt-3 text-white"> Welcome to my awesome Blog </h3>
-                        <p class="text-light">We Love Django As much as you do..! &nbsp
-                        </p>
                     </div>
                 </div>
             </div>
@@ -428,7 +426,25 @@ Finally, we'll create the Post detail template.
     from django.utils.safestring import mark_safe
     from django.contrib.auth.models import User
 
-    ...
+    STATUS = (
+        (0,"Draft"),
+        (1,"Publish")
+    )
+
+    class Post(models.Model):
+        title = models.CharField(max_length=200, unique=True)
+        slug = models.SlugField(max_length=200, unique=True)
+        author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
+        updated_on = models.DateTimeField(auto_now= True)
+        content = models.TextField()
+        created_on = models.DateTimeField(auto_now_add=True)
+        status = models.IntegerField(choices=STATUS, default=0)
+
+        class Meta:
+            ordering = ['-created_on']
+
+        def __str__(self):
+            return self.title
 
     class BackgroundImage(models.Model):
         background_image_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -442,8 +458,6 @@ Finally, we'll create the Post detail template.
         text_color = models.CharField(max_length=25)
         button_color = models.CharField(max_length=25)
         navbar_color = models.CharField(max_length=25)
-        icon_color = models.CharField(max_length=25)
-        container_color = models.CharField(max_length=25)
         name = models.CharField(max_length=25)
         def __str__(self):
             return self.name
@@ -469,6 +483,7 @@ Finally, we'll create the Post detail template.
 
     from django.contrib import admin
     from .models import Post, BackgroundImage, ColorPalette, FontTable, Setting
+    from django.utils.safestring import mark_safe
     
     class PostAdmin(admin.ModelAdmin):
         list_display = ('title', 'slug', 'status','created_on')
@@ -501,10 +516,6 @@ Finally, we'll create the Post detail template.
             return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.button_color,obj.button_color,"________"))
         def navbar_color(obj):
             return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.navbar_color,obj.navbar_color,"________"))
-        def icon_color(obj):
-            return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.icon_color,obj.icon_color,"________"))
-        def container_color(obj):
-            return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.container_color,obj.container_color,"________"))
         #actions = None
     
         list_display = [
@@ -512,8 +523,6 @@ Finally, we'll create the Post detail template.
                        text_color,
                        button_color,
                        navbar_color,
-                       icon_color,
-                       container_color,
                        ]
     
     admin.site.register(ColorPalette, ColorPaletteAdmin)
@@ -525,7 +534,7 @@ Finally, we'll create the Post detail template.
     python manage.py makemigrations
     python manage.py migrate
 
-## In order for the background images to display in the admin portal, we need to do a couple of things. First, tell Django where to find the images by adding the following to the website/settings.py:
+## In order for the background images to display in the admin portal, we need to do a couple of things. First, tell Django where to find the images by adding the following to the bottom of website/settings.py:
 
     STATICFILES_DIRS = [
             os.path.join(BASE_DIR, "static"),
@@ -597,6 +606,13 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
     }
     </style>
 
+And, in the footer tag, at line 75, change:
+
+    <p class="m-0 text-dark text-center ">Copyright &copy; Django Blog</p>
+
+to this:
+
+    <p class="m-0 text-center ">Copyright &copy; Django Blog</p>
 
 ### Next, we need to edit blog/views.py so the variables we are injecting are in the context. Note, we'll override the get_context function and then insure that kwargs are also added.
 
@@ -613,8 +629,6 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
                 'text_color' : str(settings.color_palettes.text_color),
                 'button_color' : str(settings.color_palettes.button_color),
                 'navbar_color' : str(settings.color_palettes.navbar_color),
-                'icon_color' : str(settings.color_palettes.icon_color),
-                'container_color' : str(settings.color_palettes.container_color),
                 'font_type' : str(settings.font_type),
                 'post_list' : self.queryset
     
@@ -635,8 +649,6 @@ Fonts can be easily added via the admin portal and all of these can be chosen in
                 'text_color' : str(settings.color_palettes.text_color),
                 'button_color' : str(settings.color_palettes.button_color),
                 'navbar_color' : str(settings.color_palettes.navbar_color),
-                'icon_color' : str(settings.color_palettes.icon_color),
-                'container_color' : str(settings.color_palettes.container_color),
                 'font_type' : str(settings.font_type),
             }
             for key in kwargs.keys():
