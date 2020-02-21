@@ -556,16 +556,16 @@ Finally, we'll create the Post detail template.
         path('', include('blog.urls')),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-Now we have nice thumbnails for any background images we upload into the admin portal
+Now we have nice thumbnails for any background images we upload into the admin portal. I like to get my images at https://pixabay.com/
 
 <img src="workshop2020/website/static/images/background_thumbs.png">
 
-We also now have the ability to enter custom color palettes for styling our blog
+We also now have the ability to enter custom color palettes for styling our blog. I like to choose my color palettes at https://colorhunt.co/
 
 <img src="workshop2020/website/static/images/palette_input.png">
 <img src="workshop2020/website/static/images/palette_view.png">
 
-Fonts can be easily added via the admin portal and all of these can be chosen in the Settings model
+Fonts can be easily added via the admin portal and all of these can be chosen in the Settings model. You can find a list of web-safe fonts at https://websitesetup.org/web-safe-fonts-html-css/
 
 <img src="workshop2020/website/static/images/setting.png">
 
