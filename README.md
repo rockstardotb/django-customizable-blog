@@ -226,7 +226,7 @@ Add TEMPLATES_DIR to the 'DIRS' list in the TEMPLATES LIST (around line number 5
         },
     ]
     
-Next, create a templates directory for us to store our html templates. Now our structure looks like this:
+Now our structure looks like this:
 
     ├── db.sqlite3
     ├── templates
