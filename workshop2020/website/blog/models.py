@@ -6,7 +6,6 @@ from django.utils.html import format_html_join
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 
-
 STATUS = (
     (0,"Draft"),
     (1,"Publish")
@@ -30,7 +29,7 @@ class Post(models.Model):
 class BackgroundImage(models.Model):
     background_image_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    background_image =  models.ImageField(upload_to='./images', blank=True,unique=True)
+    background_image =  models.FileField(upload_to='./images', blank=True,unique=True)
     def __str__(self):
         return str(self.background_image)
 
@@ -39,8 +38,6 @@ class ColorPalette(models.Model):
     text_color = models.CharField(max_length=25)
     button_color = models.CharField(max_length=25)
     navbar_color = models.CharField(max_length=25)
-    icon_color = models.CharField(max_length=25)
-    container_color = models.CharField(max_length=25)
     name = models.CharField(max_length=25)
     def __str__(self):
         return self.name
@@ -61,5 +58,3 @@ class Setting(models.Model):
 
     class Meta:
         verbose_name_plural = "Settings"
-
-

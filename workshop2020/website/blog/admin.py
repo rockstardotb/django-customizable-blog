@@ -33,10 +33,6 @@ class ColorPaletteAdmin(admin.ModelAdmin):
         return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.button_color,obj.button_color,"________"))
     def navbar_color(obj):
         return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.navbar_color,obj.navbar_color,"________"))
-    def icon_color(obj):
-        return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.icon_color,obj.icon_color,"________"))
-    def container_color(obj):
-        return mark_safe('<b style="background-color:{}; color:{};">{}</b>'.format(obj.container_color,obj.container_color,"________"))
     #actions = None
 
     list_display = [
@@ -44,12 +40,10 @@ class ColorPaletteAdmin(admin.ModelAdmin):
                    text_color,
                    button_color,
                    navbar_color,
-                   icon_color,
-                   container_color,
                    ]
 
 admin.site.register(ColorPalette, ColorPaletteAdmin)
 
 admin.site.register(FontTable)
 admin.site.register(Setting)
-
+    
