@@ -16,12 +16,11 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR,'templates')
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'aj)zu5stl2@e(w*qv*3m0oldjl!i@-@3l=i(_+l4+$4ar5w83^'
+SECRET_KEY = '33x4fv8%l0yav!_w6+@tqitbs_o%jlq#q43qfd*+0sdrlzfizc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -120,11 +119,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static"),
-        os.path.join(BASE_DIR, "images")
+        '/website/images'
         ]
 
 MEDIA_URL = '/images/'
 MEDIA_ROOT = ''
-
