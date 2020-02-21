@@ -250,7 +250,7 @@ Now our structure looks like this:
         ├── urls.py
         └── views.py
         
-We want to create two templates. One that serves as a template for all other templates, i.e. includes navbars, footers, styling, etc.
+We want to create three templates. One serves as a template for all other templates, i.e. includes navbars, footers, styling, etc.
 We'll call it base.html:
 
     <!DOCTYPE html>
