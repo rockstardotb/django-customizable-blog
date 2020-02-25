@@ -78,7 +78,7 @@ Your directory structure should look like this:
     
 If you visit 0.0.0.0:8000 in your browser, you should see this:
 
-<img src="workshop2020/website/static/images/initial_django.png">
+<img src="django-customizable-blog/website/static/images/initial_django.png">
 
 ### Now we need to define models in our database (blog/models.py)
     from django.db import models
