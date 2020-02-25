@@ -120,11 +120,11 @@ If you visit 0.0.0.0:8000 in your browser, you should see this:
 ### Visit the admin portal at 0.0.0.0:8000/admin
 Log in using your credentials
 
-<img src="workshop2020/website/static/images/login_screen.png">
+<img src="django-customizable-blog/website/static/images/login_screen.png">
 
 Once you have logged in, you will see the admin portal
 
-<img src="workshop2020/website/static/images/admin_portal.png">
+<img src="django-customizable-blog/website/static/images/admin_portal.png">
 
 ### Next we want to register our Post model with the admin portal. In blog/admin.py add the following:
     from django.contrib import admin
@@ -142,11 +142,11 @@ Once you have logged in, you will see the admin portal
 
 Now, if we create a post, we will see it in our admin portal
 
-<img src="workshop2020/website/static/images/post1.png">
+<img src="django-customizable-blog/website/static/images/post1.png">
 
-<img src="workshop2020/website/static/images/post2.png">
+<img src="django-customizable-blog/website/static/images/post2.png">
 
-<img src="workshop2020/website/static/images/post3.png">
+<img src="django-customizable-blog/website/static/images/post3.png">
 
 ### Next we will create our views. In blog/views.py add the following:
     from django.views import generic
@@ -392,7 +392,7 @@ Next, we'll create the index.html, which will extend the base.html:
     </div>
     {%endblock%}
     
-<img src="workshop2020/website/static/images/index.png">
+<img src="django-customizable-blog/website/static/images/index.png">
 
 Finally, we'll create the Post detail template.
 
@@ -412,7 +412,7 @@ Finally, we'll create the Post detail template.
 
     {% endblock content %}
 
-<img src="workshop2020/website/static/images/detail.png">
+<img src="django-customizable-blog/website/static/images/detail.png">
 
 ## What if you were creating this site for someone who has zero programming experience and they want to have the ability to customize things such as color palettes, background image/color, and font type?
 # Add customization models that can be used in the admin portal to customize the blog's appearance.
@@ -558,16 +558,16 @@ Finally, we'll create the Post detail template.
 
 Now we have nice thumbnails for any background images we upload into the admin portal. I like to get my images at https://pixabay.com/
 
-<img src="workshop2020/website/static/images/background_thumbs.png">
+<img src="django-customizable-blog/website/static/images/background_thumbs.png">
 
 We also now have the ability to enter custom color palettes for styling our blog. I like to choose my color palettes at https://colorhunt.co/
 
-<img src="workshop2020/website/static/images/palette_input.png">
-<img src="workshop2020/website/static/images/palette_view.png">
+<img src="django-customizable-blog/website/static/images/palette_input.png">
+<img src="django-customizable-blog/website/static/images/palette_view.png">
 
 Fonts can be easily added via the admin portal and all of these can be chosen in the Settings model. You can find a list of web-safe fonts at https://websitesetup.org/web-safe-fonts-html-css/
 
-<img src="workshop2020/website/static/images/setting.png">
+<img src="django-customizable-blog/website/static/images/setting.png">
 
 ## Finally, we will tie our customizations into the templates using template injections.
 
@@ -658,7 +658,7 @@ to this:
 
 ### Now our blog looks like this
 
-<img src="workshop2020/website/static/images/customized.png">
+<img src="django-customizable-blog/website/static/images/customized.png">
 
 And customizations can easily be changed in the admin portal!
 
