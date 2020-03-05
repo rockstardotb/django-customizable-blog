@@ -4,7 +4,8 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get -y install vim
 
-COPY ./workshop2020 /app
+COPY ./django-customizable-blog /app
 
 WORKDIR /app
 
+RUN pip install -r requirements.txt
