@@ -5,10 +5,13 @@ Today will be using the MVC framework of Django to build a simple blog website.
 Make sure you have either Python3 or Docker installed on your computer.
 
 ## Get Started
-### First, if you are NOT using Docker, we will want to create a virtual environment so any dependencies that we install will be limited to that environment.
+### Clone the project and checkout the 'clean_slate' branch
 
     git clone https://github.com/rockstardotb/django-customizable-blog.git
+    git checkout clean_slate
     cd django-customizable-blog/django-customizable-blog/
+    
+### Next, if you are NOT using Docker, we will want to create a virtual environment so any dependencies that we install will be limited to that environment.
 
 #### On Windows
     virtualenv env
@@ -658,4 +661,3 @@ to this:
 And customizations can easily be changed in the admin portal!
 
 This completes the Django workshop!
-
