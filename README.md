@@ -23,9 +23,6 @@ Make sure you have either Python3 or Docker installed on your computer.
     make build
     make run
     make exec
-
-## Install Django
-    pip install Django
     
 ## Create Project
     mkdir website
